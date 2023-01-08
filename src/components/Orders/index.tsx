@@ -12,7 +12,7 @@ export function Orders() {
         {
           product: {
             name: 'Pizza quatro queijos',
-            imagePath: '1668472896991-quatro-queijos.png',
+            imagePath: '1673060782926-quatro-queijos.png',
             price: 40,
           },
           quantity: 3,
@@ -21,7 +21,7 @@ export function Orders() {
         {
           product: {
             name: 'Coca cola',
-            imagePath: '1668473462705-coca-cola.png',
+            imagePath: '1673098338880-coca-cola.png',
             price: 7,
           },
           quantity: 2,
