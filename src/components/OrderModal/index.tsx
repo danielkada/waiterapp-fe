@@ -16,6 +16,15 @@ export function OrderModal({ isVisible, order, onCloseModal }: OrderModalProps) 
     return null;
   }
 
+  //let total = 0;
+  //order.products.forEach(({ product, quantity}) => {
+  // total += product.price * quantity;
+  //});
+
+  const total = order.products.reduce((total, { product, quantity }) => {
+    return total + (product.price * quantity);
+  }, 0);
+
   return (
     <Overlay>
       <ModalBody>
@@ -65,6 +74,11 @@ export function OrderModal({ isVisible, order, onCloseModal }: OrderModalProps) 
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="total">
+            <span>Total</span>
+            <strong>{formatCurrency(total)}</strong>
           </div>
         </OrderDetails>
       </ModalBody>
