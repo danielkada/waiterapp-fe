@@ -9,9 +9,17 @@ interface OrderModalProps {
   isVisible: boolean;
   order: Order | null;
   onClose: () => void;
+  onCancelOrder: () => Promise<void>;
+  isLoading: boolean;
 }
 
-export function OrderModal({ isVisible, order, onClose }: OrderModalProps) {
+export function OrderModal({
+  isVisible,
+  order,
+  onClose,
+  onCancelOrder,
+  isLoading,
+}: OrderModalProps) {
   if (!isVisible || !order) {
     return null;
   }
@@ -83,12 +91,21 @@ export function OrderModal({ isVisible, order, onClose }: OrderModalProps) {
         </OrderDetails>
 
         <Actions>
-          <button type='button' className='primary'>
+          <button
+            type='button'
+            className='primary'
+            disabled={isLoading}
+          >
             <span>🧑‍🍳</span>
             <span>Iniciar Produção</span>
           </button>
 
-          <button type='button' className='secundary'>
+          <button
+            type='button'
+            className='secundary'
+            onClick={onCancelOrder}
+            disabled={isLoading}
+          >
             Cancelar pedido
           </button>
         </Actions>

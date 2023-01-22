@@ -133,6 +133,11 @@ export const Actions = styled.footer`
 
   margin-top: 32px;
 
+  button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
   .primary {
     background: #333;
     color: #fff;
