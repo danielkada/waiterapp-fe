@@ -10,6 +10,7 @@ interface OrderModalProps {
   order: Order | null;
   onClose: () => void;
   onCancelOrder: () => Promise<void>;
+  onChangeOrderStatus: () => Promise<void>;
   isLoading: boolean;
 }
 
@@ -19,6 +20,7 @@ export function OrderModal({
   onClose,
   onCancelOrder,
   isLoading,
+  onChangeOrderStatus,
 }: OrderModalProps) {
   if (!isVisible || !order) {
     return null;
@@ -54,7 +56,7 @@ export function OrderModal({
             </span>
             <strong>
               {order.status === 'WAITING' && 'Fila de espera'}
-              {order.status === 'IN_PRODUCTION' && '🧑Em preparação'}
+              {order.status === 'IN_PRODUCTION' && 'Em preparação'}
               {order.status === 'DONE' && 'Pronto!'}
             </strong>
           </div>
@@ -91,14 +93,25 @@ export function OrderModal({
         </OrderDetails>
 
         <Actions>
-          <button
-            type='button'
-            className='primary'
-            disabled={isLoading}
-          >
-            <span>🧑‍🍳</span>
-            <span>Iniciar Produção</span>
-          </button>
+          {order.status !== 'DONE'
+            && (
+              <button
+                type='button'
+                className='primary'
+                disabled={isLoading}
+                onClick={onChangeOrderStatus}
+              >
+                <span>
+                  {order.status === 'WAITING' && '🧑‍🍳'}
+                  {order.status === 'IN_PRODUCTION' && '✅'}
+                </span>
+                <span>
+                  {order.status === 'WAITING' && 'Iniciar Produção'}
+                  {order.status === 'IN_PRODUCTION' && 'Concluir Pedido'}
+                </span>
+              </button>
+            )}
+
 
           <button
             type='button'
@@ -106,7 +119,8 @@ export function OrderModal({
             onClick={onCancelOrder}
             disabled={isLoading}
           >
-            Cancelar pedido
+            {order.status === 'WAITING' || order.status === 'IN_PRODUCTION' && 'Cancelar pedido'}
+            {order.status === 'DONE' && 'Pedido entregue'}
           </button>
         </Actions>
       </ModalBody>
