@@ -1,7 +1,12 @@
 import { useState } from 'react';
+
+import { toast } from 'react-toastify';
+
 import { Order } from '../../types/Order';
-import { api } from '../../utils/api';
 import { OrderModal } from '../OrderModal';
+
+import { api } from '../../utils/api';
+
 import { Container, OrdersContainer } from './styles';
 
 interface OrdersBoardProps {
@@ -36,13 +41,16 @@ export function OrdersBoard({
     setIsLoading(true);
 
     await new Promise(resolve => setTimeout(resolve, 3000));
-    await api.delete(`/orders/${selectedOrder?._id}`)
-      .finally(() => {
-        onCancelOrder(selectedOrder!._id);
+    await api.delete(`/orders/${selectedOrder?._id}`);
 
-        setIsLoading(false);
-        setIsModalVisible(false);
-      });
+    toast.success(`
+        O pedido da mesa ${selectedOrder?.table} foi cancelado!
+      `);
+
+    onCancelOrder(selectedOrder!._id);
+
+    setIsLoading(false);
+    setIsModalVisible(false);
   }
 
   return (
